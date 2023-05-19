@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS Animals;
+
+CREATE TABLE Animals (
+    ID INT PRIMARY KEY,
+    Type ENUM('CAT', 'DOG') NOT NULL,
+    Price DOUBLE NOT NULL,
+    Name VARCHAR(50) NOT NULL,
+    DateOfBirth DATE,
+    Breed VARCHAR(255) NOT NULL,
+    Status ENUM('SOLD', 'PENDING', 'AVAILABLE') NOT NULL,
+    Gender ENUM('MALE', 'FEMALE') NOT NULL,
+    ImageURL VARCHAR(250)
+);
+
+
+

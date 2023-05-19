@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS Users;
+
+CREATE TABLE Users (
+    ID INT PRIMARY KEY,
+    UserName VARCHAR(255) NOT NULL,
+    Password VARCHAR(255) NOT NULL
+);
+
+
+
