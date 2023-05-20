@@ -20,7 +20,7 @@
 					<children>
 						<ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
 							<HBox.margin>
-								<Insets right="10.0" />
+								<Insets right="15.0" />
 							</HBox.margin>
 							<image>
 								<Image url="@../../../resources/images/icons/heart-black.png" />
@@ -28,7 +28,7 @@
 						</ImageView>
 						<Label styleClass="header-label" text="Add New Product">
 							<HBox.margin>
-								<Insets left="10.0" />
+								<Insets />
 							</HBox.margin>
 						</Label>
 					</children>

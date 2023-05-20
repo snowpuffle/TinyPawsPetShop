@@ -23,7 +23,7 @@
       					<children>
       						<ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
       							<HBox.margin>
-      								<Insets right="10.0" />
+      								<Insets right="15.0" />
       							</HBox.margin>
       							<image>
       								<Image url="@../../../resources/images/icons/heart-black.png" />
@@ -31,7 +31,7 @@
       						</ImageView>
       						<Label styleClass="header-label" text="View All Animals">
       							<HBox.margin>
-      								<Insets left="10.0" />
+      								<Insets />
       							</HBox.margin>
       						</Label>
       					</children>
@@ -72,7 +72,6 @@
 						<AnchorPane prefHeight="450.0" prefWidth="275.0">
 							<styleClass>
 								<String fx:value="card" />
-								<String fx:value="light-green-background" />
 								<String fx:value="pink-background" />
 							</styleClass>
 							<children>
