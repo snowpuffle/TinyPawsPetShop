@@ -9,7 +9,7 @@ The Tiny Paws Pet Shop System is an application built using the Model-View-Contr
 User Login Frame & Main Dashboard:
 
 <img src="resources/screenshots/LoginFrame.png" alt="LoginFrame" width="50%" height="50%">
-<img src="resources/screenshots/Dashboard.png" alt="MainDashboard" width="50%" height="50%">
+<img src="resources/screenshots/DashboardFrame.png" alt="MainDashboard" width="50%" height="50%">
 
 View Animals/Products Frame:
 
