@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../resources/stylesheets/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<VBox prefHeight="600.0" prefWidth="800.0">
+			<children>
+            <AnchorPane styleClass="dark-pink-background">
+               <children>
+      				<HBox alignment="CENTER" layoutX="42.0" prefHeight="100.0" prefWidth="420.0">
+      					<children>
+      						<ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+      							<HBox.margin>
+      								<Insets right="10.0" />
+      							</HBox.margin>
+      							<image>
+      								<Image url="@../../../resources/images/icons/heart-black.png" />
+      							</image>
+      						</ImageView>
+      						<Label styleClass="header-label" text="View All Products">
+      							<HBox.margin>
+      								<Insets left="10.0" />
+      							</HBox.margin>
+      						</Label>
+      					</children>
+      				</HBox>
+                  <Button fx:id="GoBackButton" layoutX="576.0" layoutY="25.0" mnemonicParsing="false" prefHeight="50.0" styleClass="pink-background" text="Back to Dashboard">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/images/icons/return.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+				<HBox prefHeight="500.0">
+					<children>
+						<AnchorPane prefHeight="450.0" prefWidth="500.0">
+							<styleClass>
+								<String fx:value="card" />
+								<String fx:value="pink-background" />
+							</styleClass>
+							<children>
+								<TableView fx:id="TableOfProducts" layoutX="15.0" layoutY="15.0" prefHeight="440.0" prefWidth="460.0" styleClass="grey-background">
+									<columns>
+										<TableColumn fx:id="ColumnID" editable="false" prefWidth="70.0" style="-fx-alignment: center;" text="ID" />
+										<TableColumn fx:id="ColumnName" editable="false" prefWidth="100.0" style="-fx-alignment: center;" text="Name" />
+										<TableColumn fx:id="ColumnType" editable="false" style="-fx-alignment: center;" text="Type" />
+										<TableColumn fx:id="ColumnQuantity" editable="false" prefWidth="100.0" style="-fx-alignment: center;" text="Quantity" />
+										<TableColumn fx:id="ColumnPrice" editable="false" prefWidth="100.0" style="-fx-alignment: center;" text="Sale Price" />
+									</columns>
+								</TableView>
+							</children>
+							<HBox.margin>
+								<Insets right="15.0" />
+							</HBox.margin>
+						</AnchorPane>
+						<AnchorPane prefHeight="450.0" prefWidth="275.0">
+							<styleClass>
+								<String fx:value="card" />
+								<String fx:value="light-green-background" />
+								<String fx:value="pink-background" />
+							</styleClass>
+							<children>
+								<VBox alignment="TOP_CENTER" layoutX="15.0" layoutY="15.0" prefHeight="440.0" prefWidth="235.0">
+									<children>
+										<Label fx:id="NameField" alignment="CENTER" prefHeight="25.0" prefWidth="250.0" text="Purina Pro Life">
+                                 <font>
+                                    <Font name="Pangolin Regular" size="24.0" />
+                                 </font></Label>
+										<HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+											<children>
+												<Label alignment="CENTER" prefHeight="25.0" prefWidth="80.0" text="Product ID:" textAlignment="RIGHT">
+													<font>
+														<Font name="Pangolin Regular" size="16.0" />
+													</font>
+												</Label>
+												<Label fx:id="IDField" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="50.0" text="12345">
+													<font>
+														<Font name="Pangolin Regular" size="16.0" />
+													</font>
+												</Label>
+											</children>
+										</HBox>
+										<ImageView fx:id="ImageField" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image url="@../../../resources/images/food/food-1.png" />
+											</image>
+											<VBox.margin>
+												<Insets bottom="10.0" top="10.0" />
+											</VBox.margin>
+										</ImageView>
+										<HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="250.0">
+											<children>
+												<Label prefWidth="90.0" text="Type:">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+												<Label fx:id="TypeField" prefWidth="150.0" text="Food">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+											</children>
+											<padding>
+												<Insets left="10.0" />
+											</padding>
+										</HBox>
+										<HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="310.0" prefHeight="35.0" prefWidth="250.0">
+											<children>
+												<Label prefWidth="90.0" text="Price:">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+												<Label fx:id="PriceField" prefWidth="150.0" text="\$123.00">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+											</children>
+											<padding>
+												<Insets left="10.0" />
+											</padding>
+										</HBox>
+										<HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="160.0" prefHeight="35.0" prefWidth="250.0">
+											<children>
+												<Label prefWidth="90.0" text="Size:">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+												<Label fx:id="SizeField" prefWidth="150.0" text="Small">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+											</children>
+											<padding>
+												<Insets left="10.0" />
+											</padding>
+										</HBox>
+										<HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="160.0" prefHeight="35.0" prefWidth="250.0">
+											<children>
+												<Label prefWidth="90.0" text="Status:">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+												<Label fx:id="StatusField" prefWidth="150.0" text="Available">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+											</children>
+											<padding>
+												<Insets left="10.0" />
+											</padding>
+										</HBox>
+										<HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="300.0" prefHeight="35.0" prefWidth="250.0">
+											<children>
+												<Label prefHeight="25.0" prefWidth="90.0" text="Quantity:">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+												<Label fx:id="QuantityField" prefWidth="150.0" text="18">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+											</children>
+											<padding>
+												<Insets left="10.0" />
+											</padding>
+										</HBox>
+										<HBox alignment="CENTER" layoutX="10.0" layoutY="352.0" prefHeight="50.0" prefWidth="250.0">
+											<padding>
+												<Insets left="10.0" />
+											</padding>
+											<children>
+												<Button fx:id="EditProductButton" mnemonicParsing="false" styleClass="dark-pink-background" text="Edit Product" />
+											</children>
+											<VBox.margin>
+												<Insets top="35.0" />
+											</VBox.margin>
+										</HBox>
+									</children>
+								</VBox>
+							</children>
+						</AnchorPane>
+					</children>
+					<VBox.margin>
+						<Insets />
+					</VBox.margin>
+					<padding>
+						<Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+					</padding>
+				</HBox>
+			</children>
+		</VBox>
+	</children>
+</AnchorPane>

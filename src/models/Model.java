@@ -116,15 +116,7 @@ public class Model {
 	}
 
 	// Add New Product to Database
-	public boolean addNewProduct(String type, double price, String name, int quantity, String size, String status,
-			String imageURL) throws SQLException {
-		// Generate a Unique ID for the New Product
-		int ID = generateID();
-
-		// Create New Animal Object
-		Product product = new Product(ID, type, price, name, quantity, status, size, imageURL);
-
-		// Add Product and Return Success
+	public boolean addNewProduct(Product product) throws SQLException {
 		return productDAO.addProduct(product);
 	}
 
@@ -134,13 +126,7 @@ public class Model {
 	}
 
 	// Edit/Update Product from Database
-	public boolean editProduct(Product product, int newQuantity, double newPrice, String newStatus) {
-		// Set New Data to Product
-		product.setQuantity(newQuantity);
-		product.setPrice(newPrice);
-		product.setStatus(newStatus);
-
-		// Edit Product and Return Success
+	public boolean editProduct(Product product) {
 		return productDAO.editProduct(product);
 	}
 

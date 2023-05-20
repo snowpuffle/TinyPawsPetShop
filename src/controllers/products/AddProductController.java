@@ -1,9 +1,7 @@
-package controllers.animals;
+package controllers.products;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -15,18 +13,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.Model;
-import models.animals.Animal;
+import models.products.Product;
 
-public class AddAnimalController implements Initializable {
+public class AddProductController implements Initializable {
 	// Main Attributes
 	public TextField NameField;
-	public TextField DateOfBirthField;
+	public TextField QuantityField;
 	public TextField PriceField;
-	public TextField BreedField;
 	public TextField ImageField;
 	public ComboBox<String> StatusField;
 	public ComboBox<String> TypeField;
-	public ComboBox<String> GenderField;
+	public ComboBox<String> SizeField;
 
 	// Utility Attributes
 	public Button SubmitButton;
@@ -34,22 +31,21 @@ public class AddAnimalController implements Initializable {
 	public Label MessageLabel;
 
 	@Override
-	// Initialize Method
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// Initialize Frame
 		initializeFrame();
 
 		// Initialize OnClick Action of Submit Button
-		SubmitButton.setOnAction(event -> handleAddAnimal());
+		SubmitButton.setOnAction(event -> handleAddProduct());
 		GoBackButton.setOnAction(event -> handleGoBack());
 	}
 
 	// Initialize Frame
 	private void initializeFrame() {
 		// Initialize ComboBox Fields
-		StatusField.getItems().addAll("Available", "Sold", "Pending");
-		TypeField.getItems().addAll("Dog", "Cat");
-		GenderField.getItems().addAll("Male", "Female");
+		StatusField.getItems().addAll("Available", "Not Available");
+		TypeField.getItems().addAll("Food", "Toy", "Accessory");
+		SizeField.getItems().addAll("Small", "Medium", "Large");
 	}
 
 	// Event: "Go Back" Button is Clicked
@@ -59,54 +55,53 @@ public class AddAnimalController implements Initializable {
 	}
 
 	// Event: "Submit" Button is Clicked
-	public void handleAddAnimal() {
+	public void handleAddProduct() {
 		// Get TextField Values
 		String name = NameField.getText();
-		String dob = DateOfBirthField.getText();
+		String quantity = QuantityField.getText();
 		String price = PriceField.getText();
 		String status = StatusField.getValue();
 		String type = TypeField.getValue();
-		String breed = BreedField.getText();
-		String gender = GenderField.getValue();
+		String size = SizeField.getValue();
 		String imageURL = ImageField.getText();
 
 		// Validate the Fields
-		if (validateFields(type, price, name, dob, gender, status, imageURL, breed)) {
-			// Add Animal ONLY if Fields are Valid
-			addAnimal(type, price, name, dob, breed, gender, status, imageURL);
+		if (validateFields(type, price, name, quantity, size, status, imageURL)) {
+			// Add Product ONLY if Fields are Valid
+			addProduct(type, price, name, quantity, size, status, imageURL);
 		}
 	}
 
-	// Add Animal to Database using Model
-	private void addAnimal(String type, String price, String name, String dateOfBirth, String breed, String gender,
-			String status, String imageURL) {
-
-		// Generate Attributes for Animal
-		double priceDouble = Double.parseDouble(price);
+	// Add Product to Database using Model
+	private void addProduct(String type, String price, String name, String quantity, String size, String status,
+			String imageURL) {
+		// Convert Price to a Double
 		int ID = generateID();
+		double priceDouble = Double.parseDouble(price);
+		int quantityInt = Integer.parseInt(quantity);
 
-		// Attempt to Add Animal to Database
+		// Attempt to Add Product to Database
 		try {
-			// Add Animal to Database by Accessing the Model
-			Animal animal = new Animal(ID, type, priceDouble, name, dateOfBirth, breed, gender, status, imageURL);
-			Model.getInstance().addNewAnimal(animal);
+			// Add Product to Database by Accessing the Model
+			Product product = new Product(ID, type, priceDouble, name, quantityInt, status, size, imageURL);
+			Model.getInstance().addNewProduct(product);
 
 			// Reset the Form and Display Success Message
 			resetFrame();
-			handleMessageLabel("Animal Added to Database!", true);
+			handleMessageLabel("Product Added to Database!", true);
 		} catch (SQLException e) {
 			// e.printStackTrace();
-			handleMessageLabel("Cannot Add Animal to Database!", false);
+			handleMessageLabel("Cannot Add Product to Database!", false);
 		}
 	}
 
 	// Validate All Input Fields
-	private boolean validateFields(String type, String price, String name, String dob, String gender, String status,
-			String imageURL, String breed) {
+	private boolean validateFields(String type, String price, String name, String quantity, String size, String status,
+			String imageURL) {
 		// Validate All Fields
 		if (!validateName(name)) {
 			return false;
-		} else if (!validateDOB(dob)) {
+		} else if (!validateQuantity(quantity)) {
 			return false;
 		} else if (!validatePrice(price)) {
 			return false;
@@ -114,9 +109,7 @@ public class AddAnimalController implements Initializable {
 			return false;
 		} else if (!validateType(type)) {
 			return false;
-		} else if (!validateBreed(breed)) {
-			return false;
-		} else if (!validateGender(gender)) {
+		} else if (!validateSize(size)) {
 			return false;
 		} else if (!validateImageURL(imageURL)) {
 			return false;
@@ -136,25 +129,40 @@ public class AddAnimalController implements Initializable {
 		return true;
 	}
 
-	// Validate Date of Birth Field
-	private boolean validateDOB(String dateOfBirth) {
-		// Validate DOB is Valid and NOT Empty
+	// Validate Quantity Field
+	private boolean validateQuantity(String quantity) {
+		// Validate Quantity is Valid and NOT Empty
 		try {
-			// Check if DOB Field is Empty
-			if (dateOfBirth.isBlank() || dateOfBirth.isEmpty()) {
-				handleMessageLabel("Please Enter Date of Birth!", false);
+			// Check if Quantity Field is Empty
+			if (quantity.isBlank() || quantity.isEmpty()) {
+				handleMessageLabel("Please Enter a Quantity!", false);
 				return false;
 			} else {
-				// Validate Date Type and Format
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				dateFormat.setLenient(false);
-				dateFormat.parse(dateOfBirth.trim());
-				return true;
+				// Validate Quantity Type
+				int parsedQuantity = Integer.parseInt(quantity);
+
+				// Validate Quantity Value is Between 1-100
+				if (parsedQuantity >= 1 && parsedQuantity <= 100) {
+					return true;
+				} else {
+					handleMessageLabel("Please Enter a Quantity Between 1-100!", false);
+					return false;
+				}
 			}
-		} catch (ParseException pe) {
-			handleMessageLabel("Please Enter a Valid Date of Birth!", false);
+		} catch (NumberFormatException e) {
+			handleMessageLabel("Please Enter a Valid Quantity!", false);
 			return false;
 		}
+	}
+
+	// Validate Type Field
+	private boolean validateType(String type) {
+		// Check if Type Field is Empty
+		if (type == null || type.isBlank()) {
+			handleMessageLabel("Please Select a Type!", false);
+			return false;
+		}
+		return true;
 	}
 
 	// Validate Price Field
@@ -176,41 +184,21 @@ public class AddAnimalController implements Initializable {
 		}
 	}
 
+	// Validate Size Field
+	private boolean validateSize(String size) {
+		// Check if Status Field is Empty
+		if (size == null || size.isBlank()) {
+			handleMessageLabel("Please Select a Size!", false);
+			return false;
+		}
+		return true;
+	}
+
 	// Validate Status Field
 	private boolean validateStatus(String status) {
 		// Check if Status Field is Empty
 		if (status == null || status.isBlank()) {
 			handleMessageLabel("Please Select a Status!", false);
-			return false;
-		}
-		return true;
-	}
-
-	// Validate Type Field
-	private boolean validateType(String type) {
-		// Check if Type Field is Empty
-		if (type == null || type.isBlank()) {
-			handleMessageLabel("Please Select a Type!", false);
-			return false;
-		}
-		return true;
-	}
-
-	// Validate Breed Field
-	private boolean validateBreed(String breed) {
-		// Check if Breed Field is Empty
-		if (breed.isBlank() || breed.isEmpty()) {
-			handleMessageLabel("Please Enter a Breed!", false);
-			return false;
-		}
-		return true;
-	}
-
-	// Validate Gender Field
-	private boolean validateGender(String gender) {
-		// Check if Gender Field is Empty
-		if (gender == null || gender.isBlank()) {
-			handleMessageLabel("Please Select a Gender!", false);
 			return false;
 		}
 		return true;
@@ -237,12 +225,11 @@ public class AddAnimalController implements Initializable {
 	// Clear & Reset All Fields on Frame
 	private void resetFrame() {
 		NameField.clear();
-		DateOfBirthField.clear();
+		QuantityField.clear();
 		PriceField.clear();
 		StatusField.getSelectionModel().clearSelection();
 		TypeField.getSelectionModel().clearSelection();
-		BreedField.clear();
-		GenderField.getSelectionModel().clearSelection();
+		SizeField.getSelectionModel().clearSelection();
 		ImageField.clear();
 		MessageLabel.setText("Please Fill in All Fields!");
 	}

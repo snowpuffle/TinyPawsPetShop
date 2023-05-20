@@ -2,7 +2,7 @@ package views;
 
 import controllers.*;
 import controllers.animals.*;
-//import controllers.products.*;
+import controllers.products.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -10,10 +10,6 @@ import models.animals.Animal;
 import models.products.Product;
 
 public class ViewFactory {
-
-	// Default Class Constructor
-	public ViewFactory() {
-	}
 
 	// Show User Login Window
 	public void showLoginFrame() {
@@ -31,7 +27,7 @@ public class ViewFactory {
 		createStage(fxmlLoader, "Main Dashboard");
 	}
 
-	// Show View Animals Frame
+	// Show View Animals Window
 	public void showViewAnimalsFrame() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/animals/ViewAnimals.fxml"));
 		ViewAnimalsController ViewAnimalsController = new ViewAnimalsController();
@@ -39,7 +35,7 @@ public class ViewFactory {
 		createStage(fxmlLoader, "View All Animals");
 	}
 
-	// Show Add Animal Frame
+	// Show Add Animal Window
 	public void showAddAnimalFrame() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/animals/AddAnimal.fxml"));
 		AddAnimalController AddAnimalController = new AddAnimalController();
@@ -47,7 +43,7 @@ public class ViewFactory {
 		createStage(fxmlLoader, "Add New Animal");
 	}
 
-	// Show Search Animal Frame
+	// Show Search Animal Window
 	public void showSearchAnimalFrame() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/animals/SearchAnimal.fxml"));
 		SearchAnimalController SearchAnimalController = new SearchAnimalController();
@@ -55,7 +51,7 @@ public class ViewFactory {
 		createStage(fxmlLoader, "Search Animal");
 	}
 
-	// Show Edit Animal Frame
+	// Show Edit Animal Window
 	public void showEditAnimalFrame(Animal animal) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/animals/EditAnimal.fxml"));
 		EditAnimalController EditAnimalController = new EditAnimalController(animal);
@@ -63,37 +59,37 @@ public class ViewFactory {
 		createStage(fxmlLoader, "Edit Animal");
 	}
 
-//	// Show View Products Frame
-//	public void showViewProductsFrame() {
-//		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/products/ViewProducts.fxml"));
-//		ViewProductsController ViewProductsController = new ViewProductsController();
-//		fxmlLoader.setController(ViewProductsController);
-//		createStage(fxmlLoader, "View All Products");
-//	}
-//
-//	// Show Add Product Frame
-//	public void showAddProductFrame() {
-//		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/products/AddProduct.fxml"));
-//		AddProductController AddProductController = new AddProductController();
-//		fxmlLoader.setController(AddProductController);
-//		createStage(fxmlLoader, "Add New Product");
-//	}
-//
-//	// Show Search Product Frame
-//	public void showSearchProductFrame() {
-//		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/products/SearchProduct.fxml"));
-//		SearchProductController SearchProductController = new SearchProductController();
-//		fxmlLoader.setController(SearchProductController);
-//		createStage(fxmlLoader, "Search Product");
-//	}
-//
-//	// Show Edit Product Frame
-//	public void showEditProductFrame(Product product) {
-//		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/products/EditProduct.fxml"));
-//		EditProductController EditProductController = new EditProductController(product);
-//		fxmlLoader.setController(EditProductController);
-//		createStage(fxmlLoader, "Edit Product");
-//	}
+	// Show View Products Window
+	public void showViewProductsFrame() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/products/ViewProducts.fxml"));
+		ViewProductsController ViewProductsController = new ViewProductsController();
+		fxmlLoader.setController(ViewProductsController);
+		createStage(fxmlLoader, "View All Products");
+	}
+
+	// Show Add Product Window
+	public void showAddProductFrame() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/products/AddProduct.fxml"));
+		AddProductController AddProductController = new AddProductController();
+		fxmlLoader.setController(AddProductController);
+		createStage(fxmlLoader, "Add New Product");
+	}
+
+	// Show Search Product Window
+	public void showSearchProductFrame() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/products/SearchProduct.fxml"));
+		SearchProductController SearchProductController = new SearchProductController();
+		fxmlLoader.setController(SearchProductController);
+		createStage(fxmlLoader, "Search Product");
+	}
+
+	// Show Edit Product Window
+	public void showEditProductFrame(Product product) {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/products/EditProduct.fxml"));
+		EditProductController EditProductController = new EditProductController(product);
+		fxmlLoader.setController(EditProductController);
+		createStage(fxmlLoader, "Edit Product");
+	}
 
 	// Generic: Create Stage
 	private void createStage(FXMLLoader fxmlLoader, String stageTitle) {

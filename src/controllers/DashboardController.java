@@ -33,9 +33,9 @@ public class DashboardController implements Initializable {
 		ViewAnimalsButton.setOnAction(event -> handleViewAnimals());
 		AddAnimalButton.setOnAction(event -> handleAddAnimal());
 		SearchAnimalButton.setOnAction(event -> handleSearchAnimal());
-//		ViewProductsButton.setOnAction(event -> handleViewProducts());
-//		AddProductButton.setOnAction(event -> handleAddProduct());
-//		SearchProductButton.setOnAction(event -> handleSearchProduct());
+		ViewProductsButton.setOnAction(event -> handleViewProducts());
+		AddProductButton.setOnAction(event -> handleAddProduct());
+		SearchProductButton.setOnAction(event -> handleSearchProduct());
 		LogoutButton.setOnAction(event -> handleLogout());
 	}
 
@@ -57,23 +57,23 @@ public class DashboardController implements Initializable {
 		Model.getInstance().getViewFactory().showSearchAnimalFrame();
 	}
 
-//	// Event: "View All Products" Button is Clicked
-//	private void handleViewProducts() {
-//		closeCurrentWindow();
-//		Model.getInstance().getViewFactory().showViewProductsFrame();
-//	}
-//
-//	// Event: "Add New Product" Button is Clicked
-//	private void handleAddProduct() {
-//		closeCurrentWindow();
-//		Model.getInstance().getViewFactory().showAddProductFrame();
-//	}
-//
-//	// Event: "Search for Product" Button is Clicked
-//	private void handleSearchProduct() {
-//		closeCurrentWindow();
-//		Model.getInstance().getViewFactory().showSearchProductFrame();
-//	}
+	// Event: "View All Products" Button is Clicked
+	private void handleViewProducts() {
+		closeCurrentWindow();
+		Model.getInstance().getViewFactory().showViewProductsFrame();
+	}
+
+	// Event: "Add New Product" Button is Clicked
+	private void handleAddProduct() {
+		closeCurrentWindow();
+		Model.getInstance().getViewFactory().showAddProductFrame();
+	}
+
+	// Event: "Search for Product" Button is Clicked
+	private void handleSearchProduct() {
+		closeCurrentWindow();
+		Model.getInstance().getViewFactory().showSearchProductFrame();
+	}
 
 	// Event: "Logout" Button is Clicked
 	private void handleLogout() {

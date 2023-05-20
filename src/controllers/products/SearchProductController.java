@@ -1,4 +1,4 @@
-package controllers.animals;
+package controllers.products;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -10,9 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.Model;
-import models.animals.Animal;
+import models.products.Product;
 
-public class SearchAnimalController implements Initializable {
+public class SearchProductController implements Initializable {
 	// Main Attributes
 	public TextField IDField;
 
@@ -30,7 +30,7 @@ public class SearchAnimalController implements Initializable {
 	// Initialize OnClick Actions for All Buttons
 	private void addListeners() {
 		GoBackButton.setOnAction(event -> handleGoBack());
-		SubmitButton.setOnAction(event -> handleSearchAnimal());
+		SubmitButton.setOnAction(event -> handleSearchProduct());
 	}
 
 	// Event: "Go Back" Button is Clicked
@@ -40,7 +40,7 @@ public class SearchAnimalController implements Initializable {
 	}
 
 	// Event: "Submit" Button is Clicked
-	private void handleSearchAnimal() {
+	private void handleSearchProduct() {
 		// Get ID TextField Value
 		String stringID = IDField.getText();
 
@@ -49,25 +49,25 @@ public class SearchAnimalController implements Initializable {
 			// Validate & Convert ID to Integer
 			int ID = validateID(stringID);
 
-			// Get Animal by ID & Display its Frame
-			Animal animal = getAnimal(ID);
-			if (animal != null) {
+			// Get Product by ID & Display its Frame
+			Product product = getProduct(ID);
+			if (product != null) {
 				closeCurrentWindow();
-				Model.getInstance().getViewFactory().showEditAnimalFrame(animal);
+				Model.getInstance().getViewFactory().showEditProductFrame(product);
 			} else {
-				handleMessageLabel("Cannot Find Animal with ID #" + ID + "!");
+				handleMessageLabel("Cannot Find Product with ID #" + ID + "!");
 			}
 		} else {
 			handleMessageLabel("Please Enter a Valid ID - Must be a 5-Digit Number!");
 		}
 	}
 
-	// Search Animal by ID from Database using Model
-	private Animal getAnimal(int ID) {
-		return Model.getInstance().getAnimalByID(ID);
+	// Search Product by ID from Database using Model
+	private Product getProduct(int ID) {
+		return Model.getInstance().getProductByID(ID);
 	}
 
-	// Validate Animal ID
+	// Validate Product ID
 	private int validateID(String stringID) {
 		// Try to Convert ID to a 5 Digit Integer
 		int formattedID = -1;

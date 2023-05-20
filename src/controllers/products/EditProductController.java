@@ -1,4 +1,4 @@
-package controllers.animals;
+package controllers.products;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,21 +11,20 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.Model;
-import models.animals.Animal;
+import models.products.Product;
 
-public class EditAnimalController implements Initializable {
-	// Animal for THIS Controller
-	private Animal animal;
+public class EditProductController implements Initializable {
+	// Product for THIS Controller
+	private Product product;
 
 	// Main Attributes
 	public TextField NameField;
-	public TextField DateOfBirthField;
+	public TextField QuantityField;
 	public TextField PriceField;
-	public TextField BreedField;
 	public TextField ImageField;
 	public ComboBox<String> StatusField;
 	public ComboBox<String> TypeField;
-	public ComboBox<String> GenderField;
+	public ComboBox<String> SizeField;
 
 	// Utility Attributes
 	public Button SubmitButton;
@@ -33,8 +32,8 @@ public class EditAnimalController implements Initializable {
 	public Label MessageLabel;
 
 	// Default Class Constructor
-	public EditAnimalController(Animal animal) {
-		this.animal = animal;
+	public EditProductController(Product product) {
+		this.product = product;
 	}
 
 	@Override
@@ -44,18 +43,18 @@ public class EditAnimalController implements Initializable {
 		initializeFrame();
 
 		// Initialize OnClick Action of Submit Button
-		SubmitButton.setOnAction(event -> handleEditAnimal());
+		SubmitButton.setOnAction(event -> handleEditProduct());
 		GoBackButton.setOnAction(event -> handleGoBack());
 	}
 
 	// Initialize Frame
 	private void initializeFrame() {
+		// Initialize & Disable Editing of Some Fields
 		initializeFields();
-		StatusField.getItems().addAll("Available", "Sold", "Pending");
-		DateOfBirthField.setEditable(false);
+		StatusField.getItems().addAll("Available", "Not Available");
+		SizeField.setEditable(false);
+		NameField.setEditable(false);
 		TypeField.setEditable(false);
-		BreedField.setEditable(false);
-		GenderField.setEditable(false);
 		ImageField.setEditable(false);
 	}
 
@@ -66,54 +65,54 @@ public class EditAnimalController implements Initializable {
 	}
 
 	// Event: "Submit" Button is Clicked
-	public void handleEditAnimal() {
+	public void handleEditProduct() {
 		// Get New TextField Values
-		String newName = NameField.getText();
+		String newQuantity = QuantityField.getText();
 		String newPrice = PriceField.getText();
 		String newStatus = StatusField.getValue();
 
 		// Validate the New Values
-		if (validateFields(newPrice, newName, newStatus)) {
-			// Update Animal ONLY if New Values are Valid
-			editAnimal(newPrice, newName, newStatus);
+		if (validateFields(newPrice, newQuantity, newStatus)) {
+			// Update Product ONLY if New Values are Valid
+			editProduct(newPrice, newQuantity, newStatus);
 		}
 	}
 
-	// Update Animal to Database using Model
-	private void editAnimal(String newPrice, String newName, String newStatus) {
-		// Convert Price to a Double
+	// Update Product to Database using Model
+	private void editProduct(String newPrice, String newQuantity, String newStatus) {
+		// Convert Doubles and Integers
 		double priceDouble = Double.parseDouble(newPrice);
+		int quantityInt = Integer.parseInt(newQuantity);
 
-		// Set New Data to Animal
-		animal.setName(newName);
-		animal.setPrice(priceDouble);
-		animal.setStatus(newStatus);
+		// Set New Data to Product
+		product.setQuantity(quantityInt);
+		product.setStatus(newStatus);
+		product.setPrice(priceDouble);
 
-		// Update Animal to Database by Accessing the Model
-		Model.getInstance().editAnimal(animal);
+		// Edit Product to Database by Accessing the Model
+		Model.getInstance().editProduct(product);
 
 		// Reset the Form and Display Success Message
-		handleMessageLabel("Animal Updated to Database!", true);
+		handleMessageLabel("Product Updated to Database!", true);
 	}
 
-	// Initialize All Fields for Existing Animal
+	// Initialize All Fields for Product
 	public void initializeFields() {
-		if (animal != null) {
-			NameField.setText(animal.getName());
-			DateOfBirthField.setText(animal.getDateOfBirth());
-			PriceField.setText(String.valueOf(animal.getPrice()));
-			StatusField.setValue(animal.getStatus());
-			TypeField.setValue(animal.getType());
-			BreedField.setText(animal.getBreed());
-			GenderField.setValue(animal.getGender());
-			ImageField.setText(animal.getImageURL());
+		if (product != null) {
+			NameField.setText(product.getName());
+			QuantityField.setText(String.valueOf(product.getQuantity()));
+			PriceField.setText(String.valueOf(product.getPrice()));
+			StatusField.setValue(product.getStatus());
+			TypeField.setValue(product.getType());
+			SizeField.setValue(product.getSize());
+			ImageField.setText(product.getImageURL());
 		}
 	}
 
 	// Validate All Input Fields
-	private boolean validateFields(String price, String name, String status) {
+	private boolean validateFields(String price, String quantity, String status) {
 		// Validate All Fields
-		if (!validateName(name)) {
+		if (!validateQuantity(quantity)) {
 			return false;
 		} else if (!validatePrice(price)) {
 			return false;
@@ -121,16 +120,6 @@ public class EditAnimalController implements Initializable {
 			return false;
 		}
 		// Return Flag
-		return true;
-	}
-
-	// Validate Name Field
-	private boolean validateName(String name) {
-		// Check if Name Field is Empty
-		if (name.isBlank() || name.isEmpty()) {
-			handleMessageLabel("Please Enter a Name!", false);
-			return false;
-		}
 		return true;
 	}
 
@@ -149,6 +138,32 @@ public class EditAnimalController implements Initializable {
 			}
 		} catch (NumberFormatException error) {
 			handleMessageLabel("Please Enter a Valid Price!", false);
+			return false;
+		}
+	}
+
+	// Validate Quantity Field
+	private boolean validateQuantity(String quantity) {
+		// Validate Quantity is Valid and NOT Empty
+		try {
+			// Check if Quantity Field is Empty
+			if (quantity.isBlank() || quantity.isEmpty()) {
+				handleMessageLabel("Please Enter a Quantity!", false);
+				return false;
+			} else {
+				// Validate Quantity Type
+				int parsedQuantity = Integer.parseInt(quantity);
+
+				// Validate Quantity Value is Between 1-100
+				if (parsedQuantity >= 1 && parsedQuantity <= 100) {
+					return true;
+				} else {
+					handleMessageLabel("Please Enter a Quantity Between 1-100!", false);
+					return false;
+				}
+			}
+		} catch (NumberFormatException e) {
+			handleMessageLabel("Please Enter a Valid Quantity!", false);
 			return false;
 		}
 	}
