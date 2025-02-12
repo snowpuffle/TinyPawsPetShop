@@ -101,12 +101,52 @@ public class ViewProductsController implements Initializable {
 			TableOfProducts.getSelectionModel().selectFirst();
 		} catch (Exception e) {
 			// e.printStackTrace();
-			System.out.println("ERROR CONTROLLER: Cannot Get List of Products from the Database!");
+			showErrorDialog("ERROR: Cannot Get List of Products from the Database!");
 		}
 	}
 
 	// Update Product Card
 	private void updateProductCard(Product product) {
+		try {
+			// No Product Selected
+			if (product == null) {
+				showErrorDialog("ERROR: No Product Selected!");
+				return;
+			}
+
+			// Set Default Values to Prevent Errors
+			String name = product.getName() != null ? product.getName() : "Unknown";
+			String id = String.valueOf(product.getID());
+			String type = product.getType() != null ? product.getType() : "Unknown";
+			String quantity = String.valueOf(product.getQuantity());
+			String price = product.getPrice() > 0 ? "$" + product.getPrice() : "N/A";
+			String size = product.getSize() != null ? product.getSize() : "N/A";
+			String status = product.getStatus() != null ? product.getStatus() : "Unknown";
+
+			// Validate and Load Image
+			String imageURL = fixImage(product.getImageURL(), type);
+			try {
+				ImageField.setImage(new Image(new File(imageURL).toURI().toString()));
+			} catch (IllegalArgumentException e) {
+				showErrorDialog("ERROR: Invalid Image Path!");
+				ImageField.setImage(
+						new Image(new File(System.getProperty("user.dir") + "\\resources\\images\\icons\\warning.png")
+								.toURI().toString()));
+			}
+
+			// Update UI fields
+			NameField.setText(name);
+			IDField.setText(id);
+			TypeField.setText(type);
+			QuantityField.setText(quantity);
+			PriceField.setText(price);
+			SizeField.setText(size);
+			StatusField.setText(status);
+
+		} catch (Exception e) {
+			showErrorDialog("ERROR: Occurred while Updating the Card!");
+		}
+
 		// Fix Image URL
 		String type = product.getType();
 		String imageURL = fixImage(product.getImageURL(), type);
@@ -114,7 +154,7 @@ public class ViewProductsController implements Initializable {
 		// Update Product Card UI based on Selected Product
 		NameField.setText(product.getName());
 		IDField.setText(String.valueOf(product.getID()));
-		ImageField.setImage(new Image(imageURL));
+		ImageField.setImage(new Image(new File(imageURL).toURI().toString()));
 		TypeField.setText(type);
 		QuantityField.setText(String.valueOf(product.getQuantity()));
 		PriceField.setText("$" + product.getPrice());
@@ -127,6 +167,11 @@ public class ViewProductsController implements Initializable {
 		// Initialize Empty Location
 		String mainLocation = System.getProperty("user.dir") + "\\resources\\images\\";
 		String imageLocation = "";
+
+		// Set Default Image if Null or Empty
+		if (image == null || image.trim().isEmpty()) {
+			return mainLocation + "\\icons\\warning.png";
+		}
 
 		// Set Image Folder Location based on Type
 		if ("FOOD".equalsIgnoreCase(type)) {
@@ -145,6 +190,11 @@ public class ViewProductsController implements Initializable {
 
 		// Return Image Location
 		return imageLocation;
+	}
+
+	// Display Error Messages
+	private void showErrorDialog(String message) {
+		System.out.println(message);
 	}
 
 	// Generic: Close Current Window

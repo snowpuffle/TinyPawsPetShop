@@ -106,6 +106,50 @@ public class ViewAnimalsController implements Initializable {
 
 	// Update Animal Card
 	private void updateAnimalCard(Animal animal) {
+
+		try {
+			// No Animal Selected
+			if (animal == null) {
+				showErrorDialog("ERROR: No Animal Selected!");
+				return;
+			}
+
+			// Set Default Values to Prevent Errors
+			String name = animal.getName() != null ? animal.getName() : "Unknown";
+			String id = String.valueOf(animal.getID());
+			String type = animal.getType() != null ? animal.getType() : "Unknown";
+			String dob = animal.getDateOfBirth();
+			String price = animal.getPrice() > 0 ? "$" + animal.getPrice() : "N/A";
+			String breed = animal.getBreed() != null ? animal.getBreed() : "Unknown";
+			String gender = animal.getGender() != null ? animal.getGender() : "Unknown";
+			String status = animal.getStatus() != null ? animal.getStatus() : "Unknown";
+
+			// Validate and Load Image
+			String imageURL = fixImage(animal.getImageURL(), type);
+			try {
+				ImageField.setImage(new Image(new File(imageURL).toURI().toString()));
+			} catch (IllegalArgumentException e) {
+				showErrorDialog("ERROR: Invalid Image Path!");
+				ImageField.setImage(
+						new Image(new File(System.getProperty("user.dir") + "\\resources\\images\\icons\\warning.png")
+								.toURI().toString()));
+			}
+
+			// Update UI fields
+			NameField.setText(name);
+			IDField.setText(id);
+			ImageField.setImage(new Image(new File(imageURL).toURI().toString()));
+			TypeField.setText(type);
+			DateOfBirthField.setText(dob);
+			PriceField.setText(price);
+			BreedField.setText(breed);
+			GenderField.setText(gender);
+			StatusField.setText(status);
+
+		} catch (Exception e) {
+			showErrorDialog("ERROR: Occurred while Updating the Card!");
+		}
+
 		// Fix Image URL
 		String type = animal.getType();
 		String imageURL = fixImage(animal.getImageURL(), type);
@@ -113,7 +157,7 @@ public class ViewAnimalsController implements Initializable {
 		// Update Animal Card UI based on Selected Animal
 		NameField.setText(animal.getName());
 		IDField.setText(String.valueOf(animal.getID()));
-		ImageField.setImage(new Image(imageURL));
+		ImageField.setImage(new Image(new File(imageURL).toURI().toString()));
 		TypeField.setText(type);
 		DateOfBirthField.setText(animal.getDateOfBirth());
 		PriceField.setText("$" + animal.getPrice());
@@ -125,8 +169,13 @@ public class ViewAnimalsController implements Initializable {
 	// Fix ImageURL Based on Type
 	private String fixImage(String image, String type) {
 		// Initialize Empty Location
-		String mainLocation = System.getProperty("user.dir") + "\\resources\\images\\";
+		String mainLocation = System.getProperty("user.dir") + "\\resources\\images";
 		String imageLocation = "";
+
+		// Set Default Image if Null or Empty
+		if (image == null || image.trim().isEmpty()) {
+			return mainLocation + "\\icons\\warning.png";
+		}
 
 		// Set Image Folder Location based on Type
 		if ("CAT".equalsIgnoreCase(type)) {
@@ -143,6 +192,11 @@ public class ViewAnimalsController implements Initializable {
 
 		// Return Image Location
 		return imageLocation;
+	}
+
+	// Display Error Messages
+	private void showErrorDialog(String message) {
+		System.out.println(message);
 	}
 
 	// Generic: Close Current Window
